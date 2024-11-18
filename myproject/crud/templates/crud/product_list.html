@@ -8,9 +8,55 @@
  {% block content %}
  <h1>商品一覧</h1>
  <a href="{% url 'new' %}">新規作成</a>
- <!--検索バー-->
- <form class="d-flex mb-3" action="{% url 'list' %}" method="get">
-    <input name="q" class="form-control me-2" type="search" placeholder="商品名で検索" aria-label="Search">
+ <form class="d-flex row " action="{% url 'list' %}" method="get">
+    <!--カテゴリのプルダウン-->
+    <div class="row">
+        カテゴリ：
+        <div class="col-md-3">
+        
+            <select name="category" class="form-select">
+                <option value="all">全てのカテゴリ</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+
+            </select>
+        </div>
+    <!--価格のプルダウン-->
+    
+        価格：
+        <div class="col-md-2">
+            <select name="min_price" class="form-select">
+                <option value="">下限なし</option>
+                {% for price in price_choices %}
+                <option value="{{ price }}" {% if min_price == price|stringformat:"s" %}selected{% endif %}>
+                    {{ price }}円以上
+                </option>
+                
+                {% endfor %}       
+                
+            </select>
+        </div>
+        
+        <div class="col-md-2">
+            <select name="max_price" class="form-select">
+                <option value="">上限なし</option>
+                {% for price in price_choices %}
+                <option value="{{ price }}" {% if max_price == price|stringformat:"s" %}selected{% endif %}>
+                    {{ price }}円以下
+                </option>
+                
+                {% endfor %}        
+                
+            </select>
+        </div>
+
+    </div>
+    <!--検索バー-->
+    
+    <input name="q" class="form-control " type="search" placeholder="商品名で検索" aria-label="Search" value={{request.GET.q}}>
     <button class="btn btn-outline-primary" type="submit">検索</button>
 </form>
   <table class="table table-striped table-hover table-bordered">
@@ -44,14 +90,14 @@
  
  {# 前へ #}
  {% if page_obj.has_previous %}
- <a href="?q={{request.GET.q}}&page=1">&laquo; 先頭</a>
- <a href="?q={{request.GET.q}}&page={{ page_obj.previous_page_number }}">前へ</a>
+ <a href="?q={{request.GET.q}}&category={{request.GET.category}}&min_price={{request.GET.min_price}}&max_price={{requset.GET.max_price}}&page=1">&laquo; 先頭</a>
+ <a href="?q={{request.GET.q}}&category={{request.GET.category}}&min_price={{request.GET.min_price}}&max_price={{requset.GET.max_price}}&page={{ page_obj.previous_page_number }}">前へ</a>
  {% endif %}
  
  {# 次へ #}
  {% if page_obj.has_next %}
- <a href="?q={{request.GET.q}}&page={{ page_obj.next_page_number }}">次へ</a>
- <a href="?q={{request.GET.q}}&page={{ page_obj.paginator.num_pages }}">最後 &raquo;</a>
+ <a href="?q={{request.GET.q}}&category={{request.GET.category}}&min_price={{request.GET.min_price}}&max_price={{requset.GET.max_price}}&page={{ page_obj.next_page_number }}">次へ</a>
+ <a href="?q={{request.GET.q}}&category={{request.GET.category}}&min_price={{request.GET.min_price}}&max_price={{requset.GET.max_price}}&page={{ page_obj.paginator.num_pages }}">最後 &raquo;</a>
  {% endif %}
 
 
