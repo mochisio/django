@@ -8,11 +8,12 @@
  {% block content %}
  <h1>商品一覧</h1>
  <a href="{% url 'new' %}">新規作成</a>
+ <!--検索関連-->
  <form class="d-flex row " action="{% url 'list' %}" method="get">
     <!--カテゴリのプルダウン-->
     <div class="row">
         カテゴリ：
-     <!--form-selectはcolでのサイズ調節が出来ないのでdivで囲む形で調節-->
+        <!--form-selectは直接サイズ調整できないのでdivで囲む-->
         <div class="col-md-3">
         
             <select name="category" class="form-select">
@@ -21,7 +22,7 @@
                 <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>
                     {{ category.name }}
                 </option>
-            {% endfor %}
+                {% endfor %}
 
             </select>
         </div>
@@ -53,12 +54,22 @@
                 
             </select>
         </div>
+        <!--並び替え-->
+        <div class="col-md-3">
+            <select name="ordering" class="form-select me-2">
+                <option value="" {% if not ordering %}selected{% endif %}>並び替え</option>
+                <option value="price" {% if ordering == "price" %}selected{% endif %}>価格が低い順</option>
+                <option value="-price" {% if ordering == "-price" %}selected{% endif %}>価格が高い順</option>
+                <option value="name" {% if ordering == "name" %}selected{% endif %}>商品名昇順</option>
+                <option value="-name" {% if ordering == "-name" %}selected{% endif %}>商品名降順</option>
+            </select>
+        </div>
 
     </div>
-    <!--検索バー-->
-    
+    <!--検索バー-->    
     <input name="q" class="form-control " type="search" placeholder="商品名で検索" aria-label="Search" value={{request.GET.q}}>
     <button class="btn btn-outline-primary" type="submit">検索</button>
+
 </form>
   <table class="table table-striped table-hover table-bordered">
      <thead>

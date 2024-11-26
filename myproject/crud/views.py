@@ -25,6 +25,7 @@ class ProductListView(LoginRequiredMixin,ListView):
         category_id = self.request.GET.get('category')
         min_price = self.request.GET.get('min_price')
         max_price = self.request.GET.get('max_price')
+        ordering = self.request.GET.get('ordering')
 
             # デバッグのために取得した値を出力
         print(f"query: {query}, category_id: {category_id}, min_price: {min_price}, max_price: {max_price}")
@@ -51,13 +52,12 @@ class ProductListView(LoginRequiredMixin,ListView):
                queryset = queryset.filter(price__lte=max_price)
                
           except ValueError: 
-               max_price= 99999999
+               max_price= 99999999      
 
-        
+              # 並び替えの適用
+        if ordering:
+               queryset = queryset.order_by(ordering)
             
-        
-            
-        
         return queryset
 
     # テンプレートにカテゴリ一覧を渡す
