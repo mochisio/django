@@ -102,14 +102,14 @@
  
  {# 前へ #}
  {% if page_obj.has_previous %}
- <a href="?q={{request.GET.q}}&category={{request.GET.category}}&min_price={{request.GET.min_price}}&max_price={{requset.GET.max_price}}&page=1">&laquo; 先頭</a>
- <a href="?q={{request.GET.q}}&category={{request.GET.category}}&min_price={{request.GET.min_price}}&max_price={{requset.GET.max_price}}&page={{ page_obj.previous_page_number }}">前へ</a>
+ <a href="?q={{request.GET.q}}&category={{request.GET.category}}&min_price={{request.GET.min_price}}&max_price={{requset.GET.max_price}}&ordering={{request.GET.ordering}}&page=1">&laquo; 先頭</a>
+ <a href="?q={{request.GET.q}}&category={{request.GET.category}}&min_price={{request.GET.min_price}}&max_price={{requset.GET.max_price}}&ordering={{request.GET.ordering}}&page={{ page_obj.previous_page_number }}">前へ</a>
  {% endif %}
  
  {# 次へ #}
  {% if page_obj.has_next %}
- <a href="?q={{request.GET.q}}&category={{request.GET.category}}&min_price={{request.GET.min_price}}&max_price={{requset.GET.max_price}}&page={{ page_obj.next_page_number }}">次へ</a>
- <a href="?q={{request.GET.q}}&category={{request.GET.category}}&min_price={{request.GET.min_price}}&max_price={{requset.GET.max_price}}&page={{ page_obj.paginator.num_pages }}">最後 &raquo;</a>
+ <a href="?q={{request.GET.q}}&category={{request.GET.category}}&min_price={{request.GET.min_price}}&max_price={{requset.GET.max_price}}&ordering={{request.GET.ordering}}&page={{ page_obj.next_page_number }}">次へ</a>
+ <a href="?q={{request.GET.q}}&category={{request.GET.category}}&min_price={{request.GET.min_price}}&max_price={{requset.GET.max_price}}&ordering={{request.GET.ordering}}&page={{ page_obj.paginator.num_pages }}">最後 &raquo;</a>
  {% endif %}
 
 
